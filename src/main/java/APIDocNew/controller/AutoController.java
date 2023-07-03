@@ -2,6 +2,7 @@ package APIDocNew.controller;
 
 import APIDocNew.authentificationUtil.SessionESBD;
 import APIDocNew.model.Avto;
+import APIDocNew.model.TF;
 import APIDocNew.model.xml.MySoapMessage;
 import APIDocNew.xmlUtil.MyXMLParser;
 import APIDocNew.xmlUtil.SoapParser;
@@ -105,13 +106,32 @@ public class AutoController {
     }
 
     @GetMapping("/number/{number}")
-    public Avto autoByNumber(@Parameter(description = "гос номер авто", example = "") @PathVariable String number) throws Exception {
+    public TF autoByNumber(@Parameter(description = "гос номер авто", example = "") @PathVariable String number) throws Exception {
         SessionESBD sessionESBD = new SessionESBD();
         String sessionID = sessionESBD.getSessionID();
         String xmlText = new soapRequest().getAutoInfoByNumber(number, sessionID);
-        Avto auto = new Avto();
+        TF tf = new TF();
         MyXMLParser myXMLParser = new MyXMLParser();
-        auto.setFirstName(myXMLParser.getElementFromXMLByName(xmlText,"firstName"));
-        return auto;
+        tf.setTfid(myXMLParser.getElementFromXMLByName(xmlText,"TF_ID"));
+        tf.setTftypeid(myXMLParser.getElementFromXMLByName(xmlText,"TF_TYPE_ID"));
+        tf.setVin(myXMLParser.getElementFromXMLByName(xmlText,"VIN"));
+        tf.setBodyNum(myXMLParser.getElementFromXMLByName(xmlText,"BodyNum"));
+        tf.setChassisNum(myXMLParser.getElementFromXMLByName(xmlText,"chassisNum"));
+        tf.setBorn(myXMLParser.getElementFromXMLByName(xmlText,"BORN"));
+        tf.setBornmonth(myXMLParser.getElementFromXMLByName(xmlText,"BORN_MONTH"));
+        tf.setEnginenumber(myXMLParser.getElementFromXMLByName(xmlText,"ENGINE_NUMBER"));
+        tf.setEnginevolume(myXMLParser.getElementFromXMLByName(xmlText,"ENGINE_VOLUME"));
+        tf.setEnginepower(myXMLParser.getElementFromXMLByName(xmlText,"ENGINE_POWER"));
+        tf.setRighthanddrivebool(myXMLParser.getElementFromXMLByName(xmlText,"RIGHT_HAND_DRIVE_BOOL"));
+        tf.setColor(myXMLParser.getElementFromXMLByName(xmlText,"COLOR"));
+        tf.setModelid(myXMLParser.getElementFromXMLByName(xmlText,"MODEL_ID"));
+        tf.setVoitureModel(myXMLParser.getElementFromXMLByName(xmlText,"VoitureModel"));
+        tf.setVoitureMarkId(myXMLParser.getElementFromXMLByName(xmlText,"VoitureMarkId"));
+        tf.setVoitureMark(myXMLParser.getElementFromXMLByName(xmlText,"VoitureMark"));
+        tf.setNPlaces(myXMLParser.getElementFromXMLByName(xmlText,"nPlaces"));
+        tf.setCategory(myXMLParser.getElementFromXMLByName(xmlText,"Category"));
+        tf.setVerifiedBool(myXMLParser.getElementFromXMLByName(xmlText,"verified_bool"));
+        tf.setDtVerified(myXMLParser.getElementFromXMLByName(xmlText,"dtVerified"));
+        return tf;
     }
 }

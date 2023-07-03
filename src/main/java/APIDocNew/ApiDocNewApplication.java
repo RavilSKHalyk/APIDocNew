@@ -9,7 +9,7 @@ public class ApiDocNewApplication {
 		/**
 		 * если TEST = true используется тестовый ЕСБД и ГБД
 		 */
-		public static final boolean TEST = true;
+		public static final boolean TEST = false;
 	}
 
 	public static void main(String[] args) throws Exception {

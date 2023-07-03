@@ -1,7 +1,6 @@
 package APIDocNew.model;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 
 import static APIDocNew.ApiDocNewApplication.Constants.TEST;
 
@@ -12,7 +11,7 @@ import static APIDocNew.ApiDocNewApplication.Constants.TEST;
 @Data
 public class AuthenticationAndUrlDataESBD {
 
-    @Value("esbd.test.url")
+    /*@Value("esbd.test.url")
     public String testUrl;
     @Value("esbd.test.login")
     private String testLogin;
@@ -23,7 +22,7 @@ public class AuthenticationAndUrlDataESBD {
     @Value("esbd.prod.login")
     private String prodLogin;
     @Value("esbd.prod.password")
-    private String prodPassword;
+    private String prodPassword;*/
 
     private String Url;
     private String Login;
@@ -36,7 +35,7 @@ public class AuthenticationAndUrlDataESBD {
      *
      */
     public AuthenticationAndUrlDataESBD() {
-        System.out.println("ESBD "+ testUrl);
+        //System.out.println("ESBD "+ testUrl);
         if (TEST){
             this.Url = "http://10.186.30.74:8078/IICWebservice.asmx";
             this.Login = "KIS.SSL.KIPIKOVR";
@@ -44,7 +43,7 @@ public class AuthenticationAndUrlDataESBD {
         }else{
             this.Url = "http://10.186.30.75:1108/iicwebservice.asmx";;
             this.Login = "KIS.SSL.KIPIKOVR";
-            this.Password = "F67Yn88M";
+            this.Password = "111111";
         }
     }
 }

@@ -40,6 +40,8 @@ public class SessionESBD {
         while ((line = rd.readLine()) != null) {
             respond = line;
         }
-        return new MyXMLParser().getElementFromXMLByName(respond,"SessionID");
+        String sessionID = new MyXMLParser().getElementFromXMLByName(respond,"SessionID");
+        System.out.println("sessionID = "+ sessionID);
+        return sessionID;
     }
 }

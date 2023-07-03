@@ -1,7 +1,6 @@
 package APIDocNew.model;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 
 import static APIDocNew.ApiDocNewApplication.Constants.TEST;
 
@@ -11,7 +10,7 @@ import static APIDocNew.ApiDocNewApplication.Constants.TEST;
  */
 @Data
 public class AuthenticationAndUrlDataGBD {
-    @Value("${gbd.test.url}")
+    /*@Value("${gbd.test.url}")
     private String testUrl;
     @Value("${gbd.test.userId}")
     private String testUserId;
@@ -26,7 +25,7 @@ public class AuthenticationAndUrlDataGBD {
     @Value("${gbd.prod.login}")
     private String prodLogin;
     @Value("${gbd.prod.password}")
-    private String prodPassword;
+    private String prodPassword;*/
 
     private String Url;
     private String UserID;
@@ -40,7 +39,7 @@ public class AuthenticationAndUrlDataGBD {
      *
      */
     public AuthenticationAndUrlDataGBD() {
-        System.out.println("GBD "+testUrl);
+        //System.out.println("GBD "+testUrl);
         if (TEST){
             this.Url = "https://testscbws.mkb.kz/gbdServices/";
             this.UserID = "KIS.SSL.KIPIKOVR";
