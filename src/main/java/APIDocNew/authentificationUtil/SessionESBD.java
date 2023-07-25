@@ -1,7 +1,7 @@
 package APIDocNew.authentificationUtil;
 
 import APIDocNew.model.AuthenticationAndUrlDataESBD;
-import APIDocNew.xmlUtil.MyXMLParser;
+import APIDocNew.util.MyXMLParser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,13 +14,13 @@ public class SessionESBD {
 
     public String getSessionID () throws Exception {
         String request = "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-                "                  <soap:Body>\n" +
-                "                    <AuthenticateUser xmlns=\"https://icweb/IICWebService\">\n" +
-                "                      <aName>"+ authenticationAndUrlDataESBD.getLogin() +"</aName>\n" +
-                "                      <aPassword>"+ authenticationAndUrlDataESBD.getPassword() +"</aPassword>\n" +
-                "                    </AuthenticateUser>\n" +
-                "                  </soap:Body>\n" +
-                "                </soap:Envelope>";
+                         "  <soap:Body>\n" +
+                         "      <AuthenticateUser xmlns=\"https://icweb/IICWebService\">\n" +
+                         "          <aName>"+ authenticationAndUrlDataESBD.getLogin() +"</aName>\n" +
+                         "          <aPassword>"+ authenticationAndUrlDataESBD.getPassword() +"</aPassword>\n" +
+                         "      </AuthenticateUser>\n" +
+                         "  </soap:Body>\n" +
+                         "</soap:Envelope>";
 
         URL url = new URL(authenticationAndUrlDataESBD.getUrl());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -41,7 +41,7 @@ public class SessionESBD {
             respond = line;
         }
         String sessionID = new MyXMLParser().getElementFromXMLByName(respond,"SessionID");
-        System.out.println("sessionID = "+ sessionID);
+        //System.out.println("sessionID = "+ sessionID);
         return sessionID;
     }
 }

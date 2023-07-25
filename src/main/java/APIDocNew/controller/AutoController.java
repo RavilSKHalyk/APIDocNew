@@ -4,10 +4,12 @@ import APIDocNew.authentificationUtil.SessionESBD;
 import APIDocNew.model.Avto;
 import APIDocNew.model.TF;
 import APIDocNew.model.xml.MySoapMessage;
-import APIDocNew.xmlUtil.MyXMLParser;
-import APIDocNew.xmlUtil.SoapParser;
-import APIDocNew.xmlUtil.XmlUtil;
-import APIDocNew.xmlUtil.soapRequest;
+import APIDocNew.soap.RequestESBD;
+import APIDocNew.soap.RequestGBD;
+import APIDocNew.util.MyUtil;
+import APIDocNew.util.MyXMLParser;
+import APIDocNew.util.SoapParser;
+import APIDocNew.util.XmlUtil;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,15 +29,21 @@ import java.util.ArrayList;
 @RequestMapping("/autoController")
 public class AutoController {
     @GetMapping("/iin/{iin}")
-    public ArrayList<Avto> autoByIIN(@Parameter(description = "ИИН 12 цифр", example = "12345678901") @PathVariable String iin) throws Exception {
+    public ArrayList<Avto> autoByIIN(@Parameter(description = "ИИН 12 цифр", example = "880912300763") @PathVariable String iin) throws Exception {
+        //проверяем ИИН
+        if (!new MyUtil().isNumber(iin)){
+            throw new Exception("ИИН содержит не числовые символы");
+        }
+        if (iin.length()!=12){
+            throw new Exception("не правильное количество символов ИИН");
+        }
         // здесь может быть несколько машин
         ArrayList<Avto> cars = new ArrayList<Avto>();
-        String xmlText = new soapRequest().getAutoInfo(iin);
+        String xmlText = new RequestGBD().getAutoInfo(iin);
         Document doc = XmlUtil.fromXML(xmlText);
         SoapParser parser = new SoapParser(doc);
         MySoapMessage soap = parser.parse();
         String body = XmlUtil.toXML(soap.getDocument(), false);
-        //System.out.println(body);
         InputSource is = new InputSource();
         is.setCharacterStream(new StringReader(body));
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -105,11 +113,11 @@ public class AutoController {
         return cars;
     }
 
-    @GetMapping("/number/{number}")
-    public TF autoByNumber(@Parameter(description = "гос номер авто", example = "") @PathVariable String number) throws Exception {
+    @GetMapping("/ESBDnumber/{number}")
+    public TF autoByNumberESBD(@Parameter(description = "гос номер авто", example = "") @PathVariable String number) throws Exception {
         SessionESBD sessionESBD = new SessionESBD();
         String sessionID = sessionESBD.getSessionID();
-        String xmlText = new soapRequest().getAutoInfoByNumber(number, sessionID);
+        String xmlText = new RequestESBD().getAutoInfoByNumber(number, sessionID);
         TF tf = new TF();
         MyXMLParser myXMLParser = new MyXMLParser();
         tf.setTfid(myXMLParser.getElementFromXMLByName(xmlText,"TF_ID"));
@@ -134,4 +142,24 @@ public class AutoController {
         tf.setDtVerified(myXMLParser.getElementFromXMLByName(xmlText,"dtVerified"));
         return tf;
     }
+
+    @GetMapping("/GBDnumber/{number}")
+    public ArrayList<Avto> autoByNumberGBD(@Parameter(description = "гос номер авто", example = "") @PathVariable String number) throws Exception {
+        ArrayList<Avto> cars = new ArrayList<Avto>();
+        String xmlText = new RequestGBD().getAutoInfoByNumber(number);
+
+        return cars;
+    }
+
+    /**
+     * обработчик ошибок
+     * @param exception исключение
+     * @return код + текст ошибки
+     */
+    /*@ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorMessage> handleException(Exception exception) {
+        return ResponseEntity
+                .status(500)
+                .body(new ErrorMessage(exception.getMessage()));
+    }*/
 }

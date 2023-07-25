@@ -11,17 +11,17 @@ import static APIDocNew.ApiDocNewApplication.Constants.TEST;
 @Data
 public class AuthenticationAndUrlDataESBD {
 
-    /*@Value("esbd.test.url")
+    /*@Value("${esbd.testUrl}")
     public String testUrl;
-    @Value("esbd.test.login")
+    @Value("${esbd.testLogin}")
     private String testLogin;
-    @Value("esbd.test.password")
+    @Value("${esbd.testPassword}")
     private String testPassword;
-    @Value("esbd.prod.url")
+    @Value("${esbd.prodUrl}")
     private String prodUrl;
-    @Value("esbd.prod.login")
+    @Value("${esbd.prodLogin}")
     private String prodLogin;
-    @Value("esbd.prod.password")
+    @Value("${esbd.prodPassword}")
     private String prodPassword;*/
 
     private String Url;

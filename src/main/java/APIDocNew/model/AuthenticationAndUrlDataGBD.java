@@ -10,22 +10,22 @@ import static APIDocNew.ApiDocNewApplication.Constants.TEST;
  */
 @Data
 public class AuthenticationAndUrlDataGBD {
-    /*@Value("${gbd.test.url}")
-    private String testUrl;
-    @Value("${gbd.test.userId}")
-    private String testUserId;
-    @Value("${gbd.test.login}")
-    private String testLogin;
-    @Value("${gbd.test.password}")
-    private String testPassword;
-    @Value("${gbd.prod.url}")
-    private String prodUrl;
-    @Value("${gbd.prod.userId}")
-    private String prodUserId;
-    @Value("${gbd.prod.login}")
-    private String prodLogin;
-    @Value("${gbd.prod.password}")
-    private String prodPassword;*/
+    /*@Value("${gbd.testUrl}")
+    String testUrl;
+    @Value("${gbd.testUserId}")
+    String testUserId;
+    @Value("${gbd.testLogin}")
+    String testLogin;
+    @Value("${gbd.testPassword}")
+    String testPassword;
+    @Value("${gbd.prodUrl}")
+    String prodUrl;
+    @Value("${gbd.prodUserId}")
+    String prodUserId;
+    @Value("${gbd.prodLogin}")
+    String prodLogin;
+    @Value("${gbd.prodPassword}")
+    String prodPassword;*/
 
     private String Url;
     private String UserID;

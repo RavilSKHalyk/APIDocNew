@@ -3,7 +3,7 @@ package APIDocNew.authentificationUtil;
 import APIDocNew.model.AuthenticationAndUrlDataGBD;
 import APIDocNew.model.KeyDataRequest;
 import APIDocNew.model.Keys;
-import APIDocNew.xmlUtil.soapRequest;
+import APIDocNew.soap.RequestGBD;
 
 public class KeysGBD {
     AuthenticationAndUrlDataGBD authenticationAndUrlDataGBD = new AuthenticationAndUrlDataGBD();
@@ -13,7 +13,7 @@ public class KeysGBD {
      *
      */
     public Keys getKeysFromGBD (KeyDataRequest keyDataRequest) throws Exception {
-        String xmlText = new soapRequest().getKeysFromGBD(keyDataRequest);
+        String xmlText = new RequestGBD().getKeysFromGBD(keyDataRequest);
 
 
         String PublicKey = "";

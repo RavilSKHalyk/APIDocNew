@@ -12,19 +12,18 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import java.io.File;
 
 public class S3Util {
-    private final String accessKey = "00bb23af635810edc943";
+    private final String accessKey = "00bb23af63581 0edc943";
     private final String secretKey = "FbWzvIg1PjfCV6q5XoEzXnqMTwk1Pm6/3u0vYTVC";
     private final String urlEndpoint = "s3-almaty.abay.kazteleport.kz:443";
 
     public AmazonS3 getClient(){
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+        return AmazonS3ClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .withEndpointConfiguration(
                         new AwsClientBuilder.EndpointConfiguration(urlEndpoint, "auto")
                 )
                 .build();
-        return s3Client;
     }
 
     public void createBucket (String bucketName){
@@ -43,10 +42,16 @@ public class S3Util {
 
     public void PutObjectInBucket (String bucketName, String objectKey, File file){
         AmazonS3 s3Client =  getClient();
+        //System.out.println("создано подключение для записи");
         PutObjectRequest request = new PutObjectRequest(bucketName, objectKey, file);
         s3Client.putObject(request);
     }
 
+    /**
+     * Удалить обьект из бакета
+     * @param bucketName имя бакета
+     * @param objectKey имя обьекта
+     */
     public void DeleteObjectFromBucket (String bucketName, String objectKey){
         AmazonS3 s3Client =  getClient();
         s3Client.deleteObject(bucketName, objectKey);
@@ -54,10 +59,37 @@ public class S3Util {
 
     /**
      * удалить можно только пустой бакет, поэтому сначала нужно удалить все обьекты из него
-     * @param bucketName
+     * @param bucketName имя бакета
      */
     public void DeleteBucket (String bucketName){
         AmazonS3 s3Client =  getClient();
         s3Client.deleteBucket(bucketName);
     }
+
+    /**
+     * Проверка существования обьекта
+     * @param bucketName имя бакета
+     * @param objectName имя обьекта
+     * @return
+     */
+    public boolean isExsist (String bucketName, String objectName){
+        AmazonS3 s3Client =  getClient();
+        //System.out.println("создано подключение");
+        if (s3Client.doesBucketExistV2(bucketName)) {
+            //System.out.println("существует бакет");
+        }
+        return s3Client.doesObjectExist(bucketName, objectName);
+    }
+
+    /**
+     * получить данные из обьекта
+     * @param bucketName имя бакета
+     * @param objectName имя обьекта
+     * @return
+     */
+    public String getStringFromObject(String bucketName, String objectName){
+        AmazonS3 s3Client = getClient();
+        return s3Client.getObjectAsString(bucketName, objectName);
+    }
+
 }
